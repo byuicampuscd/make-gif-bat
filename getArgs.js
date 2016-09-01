@@ -51,6 +51,7 @@ module.exports = function (numberOfPings) {
         .help('h')
         .alias('h', 'help')
         .demand(['s', 'd', 'l'])
+        .version()
         .argv;
 
 };
