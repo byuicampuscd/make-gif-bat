@@ -7,11 +7,16 @@
     "bin": {
         "make-gif-list": "index.js"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/byuicampuscd/make-gif-bat.git"
+    },
     "dependencies": {
         "js-combinatorics": "^0.5.2",
         "yargs": "^5.0.0"
     },
     "devDependencies": {},
+
     "scripts": {
         "test": "node index.js -s 5 -d 3000 -l 3"
     },
