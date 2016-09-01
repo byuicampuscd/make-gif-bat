@@ -1,0 +1,20 @@
+{
+    "name": "make-gif-bat",
+    "version": "1.0.0",
+    "description": "make bat file that runs image magick to turn png frames into gifs",
+    "main": "index.js",
+    "preferGlobal": true,
+    "bin": {
+        "make-gif-list": "index.js"
+    },
+    "dependencies": {
+        "js-combinatorics": "^0.5.2",
+        "yargs": "^5.0.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "node index.js -s 5 -d 3000 -l 3"
+    },
+    "author": "Joshua McKinney",
+    "license": "MIT"
+}
