@@ -35,7 +35,7 @@ module.exports = function (numberOfPings) {
     }
 
     return require('yargs')
-        .usage('Usage: $0 -s [num] -d [num] -l [num]')
+        .usage('Usage: make-gif-list -s [num] -d [num] -l [num]')
         .alias('s', 'steps')
         .describe('s', 'The number of major frames there are')
         .nargs('s', 1)
