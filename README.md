@@ -1,4 +1,4 @@
-# make-gif-bat
+# make-gif-list
 This makes a bat file that runs image magick to turn all the png frames in a folder into different gif
 
 # Help
