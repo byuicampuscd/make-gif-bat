@@ -10,6 +10,10 @@ function derationToDelay(duration, numberOfFrames) {
     return parseInt(duration / numberOfFrames / 10, 10);
 }
 
+function makeFileName(fileObj){
+   return fileObj.startStep + '-' + fileObj.endStep + '.gif';
+}
+
 //get the pings in this folder
 pngsAll = fs.readdirSync('.').filter(function (file) {
     return path.extname(file).toLowerCase() === '.png';
@@ -36,26 +40,30 @@ ends = combo.permutation(pngsMain, 2).toArray().sort(function (a, b) {
 
 //loop the pngsAll list from the start and end points add to array
 finalList = ends.map(function (startEnd) {
-    var start = pngsAll.indexOf(startEnd[0]),
-        end = pngsAll.indexOf(startEnd[1]),
+    var startFile = pngsAll.indexOf(startEnd[0]),
+        endFile = pngsAll.indexOf(startEnd[1]),
+        startStep = pngsMain.indexOf(startEnd[0]) + 1,
+        endStep = pngsMain.indexOf(startEnd[1]) + 1,
         arrayOut = [],
         step = 1,
         i;
 
-    if (end < start) {
+    if (endFile < startFile) {
         step = -1;
     }
 
-    for (i = start; i !== end; i += step) {
+    for (i = startFile; i !== endFile; i += step) {
         arrayOut.push(pngsAll[i]);
     }
 
     //put the last one on    
-    arrayOut.push(pngsAll[end]);
+    arrayOut.push(pngsAll[endFile]);
 
     return {
-        start: start,
-        end: end,
+        startFile: startFile,
+        endFile: endFile,
+        startStep:startStep, 
+        endStep:endStep,
         files: arrayOut
     };
 });
@@ -64,18 +72,18 @@ finalList = ends.map(function (startEnd) {
 fileText = finalList.map(function (file) {
     var command = "magick convert -dispose previous -delay " + derationToDelay(args.d, file.files.length),
         currentFolder = __dirname.split(path.sep),
-        fileNameOut = file.start + '-' + file.end + '.gif';
+        fileNameOut = makeFileName(file);
     return command + ' ' + file.files.join(' ') + ' -loop ' + args.l + ' ' + path.join(newFolderName, fileNameOut);
 });
 
 htmlText = finalList.map(function (file) {
-    return '^<img src=\'' + file.start + '-' + file.end + '.gif' + '\' ^>';
+    return '^<img src=\'' + makeFileName(file) + '\' ^>';
 });
 
 fileTextOut = "mkdir " +
     newFolderName +
     '\r\n' + fileText.join('\r\n') +
-    '\r\n' + 'echo ' + htmlText.join(' ') + ' > ' + path.join(newFolderName, "allGifs.html") +
+    '\r\n' + 'echo ^<style^>img{border: 1px solid black;}^</style^>' + htmlText.join(' ') + ' > ' + path.join(newFolderName, "allGifs.html") +
     '\r\npause';
 
 console.log(fileTextOut);
