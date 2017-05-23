@@ -1,5 +1,5 @@
 {
-    "name": "make-gif-bat",
+    "name": "make-gif-list",
     "version": "1.0.0",
     "description": "make bat file that runs image magick to turn png frames into gifs",
     "main": "index.js",
